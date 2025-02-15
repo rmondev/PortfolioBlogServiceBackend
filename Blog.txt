@@ -1,0 +1,31 @@
+Date: 2025-02-15 2:56 PM
+Title: Portfolio Website Blog Service
+Body:
+    I want to create a backend blog blog service for my portfolio website.
+    I am going to write it in TypeScript, to help sharpen up my TypeScript skills.
+    I want to host the database locally on my home network NAS. The brand is Synology Diskstation DS223j.
+    The NAS has a web-accessible UI, that runs an OS called "DiskStation Manager". DiskStation Manager has a program suite for NAS management, as well as a Container Manager to create and manage Docker instances. I want to host the database for this blog service using a Docker container on my NAS. The container will be created using a PostgresSQL image provided by the Container Manager. Since I don't want direct connections from the internet to my home NAS, I will route backend calls to the NAS hosted database via Cloudflare. 
+
+    For the backend service, I will be using the Node.js runtime and the Express.js framework to run API calls for the blog (GET, POST, PUT, DELETE).
+
+    The blog posts will be held in a table called "Posts". Attributes for each Post will be:
+
+        - ID (PK, auto-generated)
+        - DATE(Date)
+        - CATEGORY(String)
+        - TITLE(sting)
+        - BODY
+
+    Before I get to ahead of myself, I'll need to set up the environment and figure out how host my PostgresSQL service locally on my NAS.
+
+
+Date: 2025-02-15 6:27 PM
+Title: Setup postgres container
+Body:
+    - Created container using Container Manager and postgres image
+    - Needed to install PostgreSQL on Windows
+    - Needed to add 'psql' to Windows PATH list
+    - Test connection to NAS-hosted PostgresSQL
+    - Test was successful; I was able to connect externally from my Windows terminal to the NAS postgres database
+
+Date: 
