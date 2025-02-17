@@ -29,8 +29,9 @@ Body:
     - Test was successful; I was able to connect externally from my Windows terminal to the NAS postgres database
 
 Date: 2025-02-16 10:46 PM
-Title: Cloudflare Tunnel for PostgresSQL
+Title: Cloudflare Tunnel for PostgresSQL (Adding Authentication Middleware)
 Body:
+    Before setting up the Cloudflare tunnel I need to add API authentication.
     Since I am hosting a PostgreSQL server on my private home network NAS, I need additional security to handle incoming and outgoing traffic. For this, I need to implement API key authentication in the Express.js backend I created to ensure that only authorized requests can access the API endpoints. I had to create a HEX coded key using the CLI command 'openssl rand -hex 32'. This created a unique key. 
 
     API Key Authentication Middleware (Implemented in server.ts):
@@ -58,7 +59,7 @@ Body:
     5. Calls next() to allow the request to continue only if the key is valid.
 
     Why This Is Important: 
-    
+
     This middleware acts as a first layer of defense, preventing unauthorized access before our API is exposed to the internet.
 
 
