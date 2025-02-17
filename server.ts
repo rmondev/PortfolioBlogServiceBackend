@@ -21,8 +21,6 @@ app.use(morgan("dev"));
 // 🔒 API Key Authentication Middleware
 app.use((req: Request, res: Response, next: NextFunction): void => {
   const apiKey = req.headers["x-api-key"];
-  console.log("Loaded API Key from .env:", process.env.API_KEY);
-
   console.log("Received API Key:", apiKey);
   
   if (apiKey !== process.env.API_KEY) {

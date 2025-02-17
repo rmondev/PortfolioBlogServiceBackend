@@ -28,4 +28,37 @@ Body:
     - Test connection to NAS-hosted PostgresSQL
     - Test was successful; I was able to connect externally from my Windows terminal to the NAS postgres database
 
-Date: 
+Date: 2025-02-16 10:46 PM
+Title: Cloudflare Tunnel for PostgresSQL
+Body:
+    Since I am hosting a PostgreSQL server on my private home network NAS, I need additional security to handle incoming and outgoing traffic. For this, I need to implement API key authentication in the Express.js backend I created to ensure that only authorized requests can access the API endpoints. I had to create a HEX coded key using the CLI command 'openssl rand -hex 32'. This created a unique key. 
+
+    API Key Authentication Middleware (Implemented in server.ts):
+
+    app.use((req: Request, res: Response, next: NextFunction): void => {
+    const apiKey = req.headers["x-api-key"]; // 🔹 Extract API key from request headers
+    console.log("Received API Key:", apiKey);
+    console.log("Loaded API Key from .env:", process.env.API_KEY);
+
+    if (apiKey !== process.env.API_KEY) {
+        console.log("API Key Mismatch!"); // Debugging log
+        res.status(403).json({ error: "Unauthorized" }); // 🔹 Reject unauthorized access
+        return;
+    }
+
+    next(); // 🔹 Allow request to proceed if the API key is valid
+    });
+
+    The reason for using this middleware:
+
+    1. Extracts the API key from the x-api-key request header.
+    2. Compares it with the API key stored in .env.
+    3. Logs both the received and expected keys (for debugging).
+    4. Blocks unauthorized requests (403 Forbidden) if the key is missing or incorrect.
+    5. Calls next() to allow the request to continue only if the key is valid.
+
+    Why This Is Important: 
+    
+    This middleware acts as a first layer of defense, preventing unauthorized access before our API is exposed to the internet.
+
+
