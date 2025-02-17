@@ -63,3 +63,18 @@ Body:
     This middleware acts as a first layer of defense, preventing unauthorized access before our API is exposed to the internet.
 
 
+Date: 2025-02-16 10:46 PM
+Title: Cloudflare Tunnel for PostgresSQL Step 2: Exposing the API via Cloudflare
+Body:
+    Now that the API authentication is in place, I need to route external traffic securely through Cloudflare so that it can be accessed online without exposing the NAS directly to the internet.
+
+    Instead of exposing my NAS's public IP and relying on firewall rules, Cloudflare Tunnel (previously known as Argo Tunnel) allows you to securely connect my Express.js API to Cloudflare without opening any inbound ports.
+
+    How Cloudflare Tunnel Works
+    - No Exposed Ports: My Synology NAS stays completely hidden from the internet.
+    - Cloudflare Agent Runs Locally: A small agent (cloudflared) runs on my NAS and creates an outbound secure connection to Cloudflare.
+    - Cloudflare Handles Requests: Instead of sending requests to my NAS’s public IP, users access api.yourdomain.com, and Cloudflare securely forwards traffic through the tunnel.
+
+    Why am I using Cloudflare?
+    
+    Cloudflare Tunnel provides a more secure alternative to exposing a public IP by creating an encrypted outbound connection from your NAS to Cloudflare, eliminating the need to open ports like 5000 or 5432 on your firewall. Unlike a traditional public IP setup, which still leaves your NAS partially exposed even when using Cloudflare's proxy, Cloudflare Tunnel fully hides your NAS from the internet, ensuring that all traffic flows exclusively through Cloudflare's network. This not only enhances security by blocking direct attacks and unauthorized access but also provides built-in DDoS protection without relying on complex firewall rules. With Cloudflare Tunnel, only Cloudflare can communicate with your backend, reducing risks while maintaining controlled and secure access to your Express.js API.
